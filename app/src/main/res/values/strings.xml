@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tours</string>
+    <string name="scenes">scenes</string>
+    <string name="favorites">favorites</string>
+    <string name="scene_title">Scene Title</string>
+    <string name="scene_info">Scene Info</string>
+</resources>
