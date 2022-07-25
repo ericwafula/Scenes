@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.R
 import tech.ericwathome.tours.adapter.SceneAdapter
 import tech.ericwathome.tours.data.DataManager
 import tech.ericwathome.tours.util.TAG
 
-
+@AndroidEntryPoint
 class ScenesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
