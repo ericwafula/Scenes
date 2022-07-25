@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.R
 import tech.ericwathome.tours.adapter.FavoritesAdapter
 import tech.ericwathome.tours.data.DataManager
 import tech.ericwathome.tours.model.SceneInfo
 import java.util.*
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     private val TAG = "FavoritesFragment"
     private var recyclerView: RecyclerView? = null
