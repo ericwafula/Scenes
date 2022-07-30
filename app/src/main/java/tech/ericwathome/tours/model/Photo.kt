@@ -6,7 +6,7 @@ data class Photo(
     val id: String,
     val description: String?,
     val altDescription: String?,
-    @SerializedName("urls") val size: Size
+    @SerializedName("urls") val size: Size?
 )
 
 data class Size(
