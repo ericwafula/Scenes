@@ -6,8 +6,6 @@ import retrofit2.http.Query
 import tech.ericwathome.tours.model.Photo
 
 interface UnsplashApiService {
-    @GET("/photos")
-    suspend fun getPhotos(
-        @Query("page") page: Int
-    ): Response<List<Photo>>
+    @GET("photos")
+    suspend fun getPhotos(): List<Photo>
 }

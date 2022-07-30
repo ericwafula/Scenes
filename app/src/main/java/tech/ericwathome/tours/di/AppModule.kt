@@ -9,14 +9,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import tech.ericwathome.tours.data.Repository
-import tech.ericwathome.tours.data.RepositoryImpl
+import tech.ericwathome.tours.repository.Repository
+import tech.ericwathome.tours.repository.RepositoryImpl
 import tech.ericwathome.tours.data.network.UnsplashApiService
-import tech.ericwathome.tours.util.API_CONNECTION_TIMEOUT
 import tech.ericwathome.tours.util.API_KEY
 import tech.ericwathome.tours.util.BASE_URL
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -38,8 +35,6 @@ object AppModule {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(httpLoggingInterceptor)
-            .connectTimeout(API_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-            .callTimeout(API_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 
@@ -57,6 +52,12 @@ object AppModule {
     @Singleton
     fun provideUnsplashApiService(retrofit: Retrofit): UnsplashApiService {
         return retrofit.create(UnsplashApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepository(unsplashApiService: UnsplashApiService): Repository {
+        return RepositoryImpl(unsplashApiService)
     }
 
 }
