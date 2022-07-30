@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="tech.ericwathome.tours">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".di.ScenesApp"
         android:allowBackup="true"
