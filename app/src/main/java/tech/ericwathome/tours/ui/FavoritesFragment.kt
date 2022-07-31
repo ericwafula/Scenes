@@ -32,7 +32,6 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoritesBinding
 
-    private var recyclerView: RecyclerView? = null
     private lateinit var favoritesAdapter: FavoritesAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,73 +44,22 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initializeFavoritesList() {
-        lifecycleScope.launchWhenCreated {
+        favoritesAdapter = FavoritesAdapter(requireContext(), listOf())
+          lifecycleScope.launchWhenCreated {
             viewModel.bookmarkedPhotos
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {
+                    favoritesAdapter.favorites = it
                     Log.d(TAG, "initializeFavoritesList: $it")
                 }
 
         }
 
-        favoritesAdapter = FavoritesAdapter(requireContext(), DataManager.favoriteScenes)
         binding.favoritesRecyclerview.apply {
             adapter = favoritesAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
         }
 
-        itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        ItemTouchHelper.RIGHT
-    ) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromPosition = viewHolder.oldPosition
-            val toPosition = target.layoutPosition
-
-            Collections.swap(DataManager.favoriteScenes, fromPosition, toPosition)
-            favoritesAdapter.notifyItemMoved(fromPosition, toPosition)
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.oldPosition
-            val deletedScene = DataManager.favoriteScenes[position]
-
-            deletedScene(position)
-            notifyItemsChanged(deletedScene, false)
-
-            Snackbar.make(recyclerView!!, "Deleted", Snackbar.LENGTH_LONG)
-                .setAction("undo") {
-                    undoDelete(deletedScene, position)
-                    notifyItemsChanged(deletedScene, true)
-                }
-                .show()
-        }
-
-    })
-
-    private fun undoDelete(deletedScene: SceneInfo, position: Int) {
-        DataManager.favoriteScenes.add(position, deletedScene)
-        favoritesAdapter.notifyItemInserted(position)
-        favoritesAdapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
-    }
-
-    private fun notifyItemsChanged(deletedScene: SceneInfo, isFavorite: Boolean) {
-        val position = DataManager.scenes.indexOf(deletedScene)
-        DataManager.scenes[position].isFavorite = isFavorite
-    }
-
-    private fun deletedScene(position: Int) {
-        DataManager.favoriteScenes.removeAt(position)
-        favoritesAdapter.notifyItemRemoved(position)
-        favoritesAdapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
     }
 }

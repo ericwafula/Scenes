@@ -16,7 +16,7 @@ import tech.ericwathome.tours.model.Photo
 import javax.inject.Inject
 
 @HiltViewModel
-class ScenesFragmentViewModel @Inject constructor(private val repository: Repository) :
+class PhotosFragmentViewModel @Inject constructor(private val repository: Repository) :
     ViewModel() {
     private var _photos : MutableStateFlow<PagingData<Photo>?> = MutableStateFlow(null)
     val photos = _photos.asStateFlow()

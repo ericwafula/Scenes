@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.adapter.PhotosPagingAdapter
-import tech.ericwathome.tours.databinding.FragmentScenesBinding
+import tech.ericwathome.tours.databinding.FragmentPhotosBinding
 import tech.ericwathome.tours.model.Photo
-import tech.ericwathome.tours.model.viewmodels.ScenesFragmentViewModel
+import tech.ericwathome.tours.model.viewmodels.PhotosFragmentViewModel
 import tech.ericwathome.tours.util.toast
 
 @AndroidEntryPoint
-class ScenesFragment : Fragment() {
-    private lateinit var binding: FragmentScenesBinding
-    private val viewModel: ScenesFragmentViewModel by viewModels()
+class PhotosFragment : Fragment() {
+    private lateinit var binding: FragmentPhotosBinding
+    private val viewModel: PhotosFragmentViewModel by viewModels()
     private lateinit var pagingAdapter: PhotosPagingAdapter
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class ScenesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentScenesBinding.inflate(inflater, container, false)
+        binding = FragmentPhotosBinding.inflate(inflater, container, false)
         initializeSceneList()
         return binding.root
     }
