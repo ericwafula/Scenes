@@ -54,10 +54,6 @@ object AppModule {
         return retrofit.create(UnsplashApiService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideRepository(unsplashApiService: UnsplashApiService): Repository {
-        return RepositoryImpl(unsplashApiService)
-    }
+
 
 }

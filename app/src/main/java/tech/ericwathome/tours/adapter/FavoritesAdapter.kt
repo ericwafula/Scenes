@@ -8,13 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tech.ericwathome.tours.R
+import tech.ericwathome.tours.databinding.FavoritesListItemBinding
 import tech.ericwathome.tours.model.SceneInfo
 
 class FavoritesAdapter(private val context: Context, private val favorites: ArrayList<SceneInfo>) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.favorites_list_item, parent, false)
-        return FavoritesViewHolder(view)
+        val binding = FavoritesListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        return FavoritesViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
@@ -26,15 +27,12 @@ class FavoritesAdapter(private val context: Context, private val favorites: Arra
         return favorites.size
     }
 
-    inner class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val favoritesImage: ImageView = itemView.findViewById(R.id.favorites_image)
-        private val favoritesTitle: TextView = itemView.findViewById(R.id.favorites_title)
-        private val favoritesInfo: TextView = itemView.findViewById(R.id.favorites_info)
+    inner class FavoritesViewHolder(private val binding: FavoritesListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun setData(scene: SceneInfo, position: Int) {
-            favoritesImage.setImageResource(scene.imageId)
-            favoritesTitle.text = scene.title
-            favoritesInfo.text = scene.info
+            binding.favoritesImage.setImageResource(scene.imageId)
+            binding.favoritesTitle.text = scene.title
+            binding.favoritesInfo.text = scene.info
         }
 
     }
