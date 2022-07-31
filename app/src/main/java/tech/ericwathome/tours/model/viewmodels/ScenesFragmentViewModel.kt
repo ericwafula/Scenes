@@ -35,4 +35,8 @@ class ScenesFragmentViewModel @Inject constructor(private val repository: Reposi
                 }
         }
     }
+
+    fun addToBookmarks(photo: Photo) {
+        repository.addToBookmarks(photo)
+    }
 }
