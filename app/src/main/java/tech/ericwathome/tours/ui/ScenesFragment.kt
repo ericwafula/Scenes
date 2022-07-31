@@ -1,29 +1,22 @@
 package tech.ericwathome.tours.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import tech.ericwathome.tours.R
 import tech.ericwathome.tours.adapter.PhotosPagingAdapter
-import tech.ericwathome.tours.adapter.SceneAdapter
-import tech.ericwathome.tours.data.DataManager
-import tech.ericwathome.tours.data.network.UnsplashApiService
 import tech.ericwathome.tours.databinding.FragmentScenesBinding
+import tech.ericwathome.tours.model.Photo
 import tech.ericwathome.tours.model.viewmodels.ScenesFragmentViewModel
-import tech.ericwathome.tours.util.TAG
-import javax.inject.Inject
+import tech.ericwathome.tours.util.toast
 
 @AndroidEntryPoint
 class ScenesFragment : Fragment() {
@@ -42,7 +35,9 @@ class ScenesFragment : Fragment() {
     }
 
     private fun initializeSceneList() {
-        pagingAdapter = PhotosPagingAdapter()
+        pagingAdapter = PhotosPagingAdapter {
+            bookmarkPhoto(it)
+        }
         binding.scenesRecyclerview.apply {
             adapter = pagingAdapter
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -58,5 +53,10 @@ class ScenesFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun bookmarkPhoto(photo: Photo) {
+        viewModel.addToBookmarks(photo)
+        requireContext().toast("${photo.id} added to bookmarks")
     }
 }
