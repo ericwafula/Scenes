@@ -7,5 +7,7 @@ import tech.ericwathome.tours.model.Photo
 
 interface UnsplashApiService {
     @GET("photos")
-    suspend fun getPhotos(): List<Photo>
+    suspend fun getPhotos(
+        @Query("page") query: Int
+    ): List<Photo>
 }
