@@ -27,8 +27,8 @@ class PhotosPagingAdapter : PagingDataAdapter<Photo, PhotosPagingAdapter.PhotoVi
                 .load(photo?.size?.regular)
                 .into(binding.sceneImage)
             binding.likes.text = photo?.likes.toString()
-            binding.username.text = photo?.sponsorship?.sponsor?.username
-            binding.description.text = photo?.description
+            binding.username.text = photo?.sponsorship?.sponsor?.username ?: "no username found"
+            binding.description.text = photo?.description ?: "no description found"
         }
 
     }
