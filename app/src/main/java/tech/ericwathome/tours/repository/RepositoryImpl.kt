@@ -3,7 +3,12 @@ package tech.ericwathome.tours.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import tech.ericwathome.tours.data.UnsplashPagingSource
 import tech.ericwathome.tours.data.network.UnsplashApiService
 import tech.ericwathome.tours.data.room.PhotoDao
@@ -27,12 +32,17 @@ class RepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun bookmarkedPhotos(): Flow<List<Photo>> {
-        TODO("Not yet implemented")
+    override fun bookmarkedPhotos(): Flow<Photo> {
+        return flow {
+            val photos = photoDao.savedPhotos()
+            photos.forEach { photo -> emit(photo) }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun addToBookmarks(photo: Photo) {
-        TODO("Not yet implemented")
+        CoroutineScope(Dispatchers.IO).launch {
+            photoDao.insert(photo)
+        }
     }
 
 }

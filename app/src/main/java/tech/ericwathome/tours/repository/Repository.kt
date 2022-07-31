@@ -9,7 +9,7 @@ import tech.ericwathome.tours.util.Resource
 interface Repository {
     fun allPhotos(): Flow<PagingData<Photo>>
 
-    fun bookmarkedPhotos(): Flow<List<Photo>>
+    fun bookmarkedPhotos(): Flow<Photo>
 
     fun addToBookmarks(photo: Photo)
 }
