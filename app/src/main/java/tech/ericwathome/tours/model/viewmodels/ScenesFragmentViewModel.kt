@@ -25,7 +25,7 @@ class ScenesFragmentViewModel @Inject constructor(private val repository: Reposi
         allPhotos()
     }
 
-    fun allPhotos() {
+    private fun allPhotos() {
         viewModelScope.launch {
             repository.allPhotos()
                 .flowOn(Dispatchers.IO)

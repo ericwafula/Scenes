@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import tech.ericwathome.tours.R
 import tech.ericwathome.tours.data.DataManager
+import tech.ericwathome.tours.databinding.SceneListItemBinding
 import tech.ericwathome.tours.model.SceneInfo
 import tech.ericwathome.tours.util.TAG
 
@@ -21,8 +22,8 @@ class SceneAdapter(private val context: Context, private val scenes: ArrayList<S
         parent: ViewGroup,
         viewType: Int
     ): SceneViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.scene_list_item, parent, false)
-        return SceneViewHolder(view)
+        val binding = SceneListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        return SceneViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SceneViewHolder, position: Int) {
@@ -35,7 +36,7 @@ class SceneAdapter(private val context: Context, private val scenes: ArrayList<S
         return scenes.size
     }
 
-    inner class SceneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class SceneViewHolder(private val binding: SceneListItemBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
         private var currentPosition = -1
