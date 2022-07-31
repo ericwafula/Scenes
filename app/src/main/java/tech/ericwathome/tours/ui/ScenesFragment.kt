@@ -50,7 +50,6 @@ class ScenesFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenCreated {
-
             viewModel.photos
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {

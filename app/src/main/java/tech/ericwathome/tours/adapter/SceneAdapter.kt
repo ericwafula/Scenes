@@ -1,7 +1,6 @@
 package tech.ericwathome.tours.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import tech.ericwathome.tours.R
 import tech.ericwathome.tours.data.DataManager
 import tech.ericwathome.tours.databinding.SceneListItemBinding
 import tech.ericwathome.tours.model.SceneInfo
-import tech.ericwathome.tours.util.TAG
 
 class SceneAdapter(private val context: Context, private val scenes: ArrayList<SceneInfo>) :
     RecyclerView.Adapter<SceneAdapter.SceneViewHolder>() {
@@ -42,39 +40,31 @@ class SceneAdapter(private val context: Context, private val scenes: ArrayList<S
         private var currentPosition = -1
         private lateinit var currentScene: SceneInfo
 
-        private val sceneImage: ImageView = itemView.findViewById(R.id.scene_image)
-        private val sceneTitle: TextView = itemView.findViewById(R.id.scene_title)
-        private val heartIcon: ImageView = itemView.findViewById(R.id.heart_icon)
-        private val trashIcon: ImageView = itemView.findViewById(R.id.trash_icon)
-
         private val heartOutlined = ResourcesCompat.getDrawable(context.resources, R.drawable.heart_outlined, null)
         private val heartFilled = ResourcesCompat.getDrawable(context.resources, R.drawable.heart_filled, null)
         private val trashOutlined = ResourcesCompat.getDrawable(context.resources, R.drawable.trash_outlined, null)
 
         fun setData(scene: SceneInfo, position: Int) {
-            sceneImage.setImageResource(scene.imageId)
-            sceneTitle.text = scene.title
+            binding.sceneImage.setImageResource(scene.imageId)
+            binding.description.text = scene.title
 
             if (scene.isFavorite) {
-                heartIcon.setImageDrawable(heartFilled)
+                binding.heartIcon.setImageDrawable(heartFilled)
             } else {
-                heartIcon.setImageDrawable(heartOutlined)
+                binding.heartIcon.setImageDrawable(heartOutlined)
             }
 
-            trashIcon.setImageDrawable(trashOutlined)
             currentPosition = position
             currentScene = scene
         }
 
         fun setListeners() {
-            heartIcon.setOnClickListener(this@SceneViewHolder)
-            trashIcon.setOnClickListener(this@SceneViewHolder)
+            binding.heartIcon.setOnClickListener(this@SceneViewHolder)
         }
 
         override fun onClick(v: View?) {
             when (v?.id) {
                 R.id.heart_icon -> addToFavorites()
-                R.id.trash_icon -> deleteScene()
             }
         }
 
@@ -89,10 +79,10 @@ class SceneAdapter(private val context: Context, private val scenes: ArrayList<S
             currentScene.isFavorite = !currentScene.isFavorite
 
             if (currentScene.isFavorite) {
-                heartIcon.setImageDrawable(heartFilled)
+                binding.heartIcon.setImageDrawable(heartFilled)
                 DataManager.favoriteScenes.add(currentScene)
             } else {
-                heartIcon.setImageDrawable(heartOutlined)
+                binding.heartIcon.setImageDrawable(heartOutlined)
                 DataManager.favoriteScenes.remove(currentScene)
             }
         }
