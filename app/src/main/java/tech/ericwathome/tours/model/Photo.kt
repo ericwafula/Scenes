@@ -6,7 +6,9 @@ data class Photo(
     val id: String,
     val description: String?,
     val altDescription: String?,
-    @SerializedName("urls") val size: Size?
+    @SerializedName("urls") val size: Size?,
+    val likes: Int,
+    val sponsorship: Sponsorship?
 )
 
 data class Size(
@@ -15,4 +17,12 @@ data class Size(
     val regular: String?,
     val small: String?,
     val thumb: String?
+)
+
+data class Sponsorship(
+    val sponsor: Sponsor?
+)
+
+data class Sponsor(
+    val username: String?
 )

@@ -26,6 +26,9 @@ class PhotosPagingAdapter : PagingDataAdapter<Photo, PhotosPagingAdapter.PhotoVi
             Glide.with(context)
                 .load(photo?.size?.regular)
                 .into(binding.sceneImage)
+            binding.likes.text = photo?.likes.toString()
+            binding.username.text = photo?.sponsorship?.sponsor?.username
+            binding.description.text = photo?.description
         }
 
     }
