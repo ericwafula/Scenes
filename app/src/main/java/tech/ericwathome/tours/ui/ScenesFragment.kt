@@ -16,39 +16,47 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import tech.ericwathome.tours.R
+import tech.ericwathome.tours.adapter.PhotosPagingAdapter
 import tech.ericwathome.tours.adapter.SceneAdapter
 import tech.ericwathome.tours.data.DataManager
+import tech.ericwathome.tours.data.network.UnsplashApiService
+import tech.ericwathome.tours.databinding.FragmentScenesBinding
 import tech.ericwathome.tours.model.viewmodels.ScenesFragmentViewModel
 import tech.ericwathome.tours.util.TAG
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScenesFragment : Fragment() {
+    private lateinit var binding: FragmentScenesBinding
     private val viewModel: ScenesFragmentViewModel by viewModels()
+    private lateinit var pagingAdapter: PhotosPagingAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_scenes, container, false)
-        initializeSceneList(view)
-        return view
+    ): View {
+        binding = FragmentScenesBinding.inflate(inflater, container, false)
+        initializeSceneList()
+        return binding.root
     }
 
-    private fun initializeSceneList(view: View?) {
-        val context = requireContext()
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.scenes_recyclerview)
-        recyclerView?.setHasFixedSize(true)
-        val adapter = SceneAdapter(context, DataManager.scenes)
-        recyclerView?.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerView?.layoutManager = layoutManager
+    private fun initializeSceneList() {
+        pagingAdapter = PhotosPagingAdapter()
+        binding.scenesRecyclerview.apply {
+            adapter = pagingAdapter
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            setHasFixedSize(true)
+        }
 
         lifecycleScope.launchWhenCreated {
+
             viewModel.photos
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {
-                    Log.d(TAG, "initializeSceneList: $it")
+                    it?.let {
+                        pagingAdapter.submitData(it)
+                    }
                 }
         }
     }

@@ -10,36 +10,40 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import tech.ericwathome.tours.R
 import tech.ericwathome.tours.adapter.FavoritesAdapter
 import tech.ericwathome.tours.data.DataManager
+import tech.ericwathome.tours.databinding.FragmentFavoritesBinding
 import tech.ericwathome.tours.model.SceneInfo
 import java.util.*
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
-    private val TAG = "FavoritesFragment"
+    companion object {
+        private val TAG = this::class.simpleName
+    }
+
+    private lateinit var binding: FragmentFavoritesBinding
+
     private var recyclerView: RecyclerView? = null
-    private lateinit var adapter: FavoritesAdapter
+    private lateinit var favoritesAdapter: FavoritesAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_favorites, container, false)
-        initializeFavoritesList(view)
-        return view
+    ): View {
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        initializeFavoritesList()
+        return binding.root
     }
 
-    private fun initializeFavoritesList(view: View?) {
-        val context = requireContext()
-        recyclerView = view?.findViewById(R.id.favorites_recyclerview)
-        recyclerView?.setHasFixedSize(true)
-        adapter = FavoritesAdapter(context, DataManager.favoriteScenes)
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerView?.adapter = adapter
-        recyclerView?.layoutManager = layoutManager
+    private fun initializeFavoritesList() {
+        favoritesAdapter = FavoritesAdapter(requireContext(), DataManager.favoriteScenes)
+        binding.favoritesRecyclerview.apply {
+            adapter = favoritesAdapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            setHasFixedSize(true)
+        }
+
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
@@ -49,16 +53,16 @@ class FavoritesFragment : Fragment() {
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            val fromPosition = viewHolder.adapterPosition
-            val toPosition = target.adapterPosition
+            val fromPosition = viewHolder.oldPosition
+            val toPosition = target.layoutPosition
 
             Collections.swap(DataManager.favoriteScenes, fromPosition, toPosition)
-            adapter.notifyItemMoved(fromPosition, toPosition)
+            favoritesAdapter.notifyItemMoved(fromPosition, toPosition)
             return true
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.adapterPosition
+            val position = viewHolder.oldPosition
             val deletedScene = DataManager.favoriteScenes[position]
 
             deletedScene(position)
@@ -76,8 +80,8 @@ class FavoritesFragment : Fragment() {
 
     private fun undoDelete(deletedScene: SceneInfo, position: Int) {
         DataManager.favoriteScenes.add(position, deletedScene)
-        adapter.notifyItemInserted(position)
-        adapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
+        favoritesAdapter.notifyItemInserted(position)
+        favoritesAdapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
     }
 
     private fun notifyItemsChanged(deletedScene: SceneInfo, isFavorite: Boolean) {
@@ -87,7 +91,7 @@ class FavoritesFragment : Fragment() {
 
     private fun deletedScene(position: Int) {
         DataManager.favoriteScenes.removeAt(position)
-        adapter.notifyItemRemoved(position)
-        adapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
+        favoritesAdapter.notifyItemRemoved(position)
+        favoritesAdapter.notifyItemRangeChanged(position, DataManager.favoriteScenes.size)
     }
 }
