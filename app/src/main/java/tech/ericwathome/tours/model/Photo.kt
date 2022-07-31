@@ -1,9 +1,12 @@
 package tech.ericwathome.tours.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Photo(
-    val id: String,
+    @PrimaryKey val id: String,
     val description: String?,
     val altDescription: String?,
     @SerializedName("urls") val size: Size?,
