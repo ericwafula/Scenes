@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/scenesFragment"
-        android:name="tech.ericwathome.tours.ui.ScenesFragment"
+        android:name="tech.ericwathome.tours.ui.PhotosFragment"
         android:label="Scenes"
-        tools:layout="@layout/fragment_scenes" >
+        tools:layout="@layout/fragment_photos" >
         <action
             android:id="@+id/action_scenesFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />

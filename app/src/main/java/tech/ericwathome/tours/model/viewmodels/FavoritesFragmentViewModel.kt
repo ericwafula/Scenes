@@ -15,7 +15,7 @@ import javax.inject.Inject
 class FavoritesFragmentViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    private var _bookmarkedPhotos: MutableStateFlow<MutableList<Photo>?> = MutableStateFlow(
+    private var _bookmarkedPhotos: MutableStateFlow<MutableList<Photo>> = MutableStateFlow(
         mutableListOf())
     val bookmarkedPhotos = _bookmarkedPhotos.asStateFlow()
 
@@ -27,8 +27,12 @@ class FavoritesFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             repository.bookmarkedPhotos()
                 .collect {
-                    _bookmarkedPhotos.value?.add(it)
+                    _bookmarkedPhotos.value.add(it)
                 }
         }
+    }
+
+    fun deletePhoto(photo: Photo) {
+        repository.deletePhoto(photo)
     }
 }
