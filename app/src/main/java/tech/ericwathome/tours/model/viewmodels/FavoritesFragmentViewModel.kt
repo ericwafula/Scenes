@@ -31,4 +31,8 @@ class FavoritesFragmentViewModel @Inject constructor(
                 }
         }
     }
+
+    fun deletePhoto(photo: Photo) {
+        repository.deletePhoto(photo)
+    }
 }

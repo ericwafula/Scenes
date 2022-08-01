@@ -12,4 +12,6 @@ interface Repository {
     fun bookmarkedPhotos(): Flow<Photo>
 
     fun addToBookmarks(photo: Photo)
+
+    fun deletePhoto(photo: Photo)
 }

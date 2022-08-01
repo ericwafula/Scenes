@@ -1,7 +1,6 @@
 package tech.ericwathome.tours.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.adapter.FavoritesAdapter
-import tech.ericwathome.tours.data.DataManager
 import tech.ericwathome.tours.databinding.FragmentFavoritesBinding
-import tech.ericwathome.tours.model.SceneInfo
+import tech.ericwathome.tours.model.Photo
 import tech.ericwathome.tours.model.viewmodels.FavoritesFragmentViewModel
-import java.util.*
+import tech.ericwathome.tours.util.toast
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -44,15 +40,15 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initializeFavoritesList() {
-        favoritesAdapter = FavoritesAdapter(requireContext(), listOf())
+        favoritesAdapter = FavoritesAdapter(listOf()) { photo, position ->
+            deletePhoto(photo, position)
+        }
           lifecycleScope.launchWhenCreated {
             viewModel.bookmarkedPhotos
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {
                     favoritesAdapter.favorites = it
-                    Log.d(TAG, "initializeFavoritesList: $it")
                 }
-
         }
 
         binding.favoritesRecyclerview.apply {
@@ -61,5 +57,26 @@ class FavoritesFragment : Fragment() {
             setHasFixedSize(true)
         }
 
+    }
+
+    private fun deletePhoto(photo: Photo, position: Int) {
+        var photos: List<Photo>? = null
+        var currentPosition: Int = -1
+        viewModel.deletePhoto(photo)
+        requireContext().toast("photo deleted successfully")
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.bookmarkedPhotos.collect {
+                currentPosition = it.size
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.bookmarkedPhotos
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    photos = it
+                }
+        }
     }
 }

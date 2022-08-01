@@ -1,9 +1,6 @@
 package tech.ericwathome.tours.data.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import tech.ericwathome.tours.model.Photo
 
@@ -14,4 +11,7 @@ interface PhotoDao {
 
     @Query("SELECT * FROM photo")
     suspend fun savedPhotos(): List<Photo>
+
+    @Delete
+    suspend fun delete(photo: Photo)
 }

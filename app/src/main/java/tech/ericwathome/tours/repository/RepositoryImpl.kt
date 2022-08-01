@@ -45,4 +45,10 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override fun deletePhoto(photo: Photo) {
+        CoroutineScope(Dispatchers.IO).launch {
+            photoDao.delete(photo)
+        }
+    }
+
 }
