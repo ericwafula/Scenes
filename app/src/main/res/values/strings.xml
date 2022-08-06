@@ -4,4 +4,6 @@
     <string name="favorites">favorites</string>
     <string name="scene_title">Scene Title</string>
     <string name="scene_info">Scene Info</string>
+    <string name="retry">Retry</string>
+    <string name="textview">TextView</string>
 </resources>
