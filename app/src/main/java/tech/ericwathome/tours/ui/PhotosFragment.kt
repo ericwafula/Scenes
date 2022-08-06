@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import tech.ericwathome.tours.adapter.PhotosLoadStateAdapter
 import tech.ericwathome.tours.adapter.PhotosPagingAdapter
 import tech.ericwathome.tours.databinding.FragmentPhotosBinding
 import tech.ericwathome.tours.model.Photo
@@ -40,6 +41,10 @@ class PhotosFragment : Fragment() {
         }
         binding.scenesRecyclerview.apply {
             adapter = pagingAdapter
+            adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+                header = PhotosLoadStateAdapter { pagingAdapter.retry() },
+                footer = PhotosLoadStateAdapter { pagingAdapter.retry() }
+            )
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
         }
