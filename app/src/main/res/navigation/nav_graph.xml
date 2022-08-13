@@ -7,20 +7,25 @@
 
     <fragment
         android:id="@+id/scenesFragment"
-        android:name="tech.ericwathome.tours.ui.PhotosFragment"
+        android:name="tech.ericwathome.tours.ui.fragments.PhotosFragment"
         android:label="Scenes"
         tools:layout="@layout/fragment_photos" >
         <action
             android:id="@+id/action_scenesFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="tech.ericwathome.tours.ui.FavoritesFragment"
+        android:name="tech.ericwathome.tours.ui.fragments.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
             android:id="@+id/action_favoritesFragment_to_scenesFragment"
             app:destination="@id/scenesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="tech.ericwathome.tours.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

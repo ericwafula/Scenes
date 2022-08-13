@@ -1,12 +1,16 @@
-package tech.ericwathome.tours.ui
+package tech.ericwathome.tours.ui.activities
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
@@ -14,21 +18,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.R
+import tech.ericwathome.tours.databinding.ActivityMainBinding
+import tech.ericwathome.tours.ui.fragments.FavoritesFragmentDirections
+import tech.ericwathome.tours.ui.fragments.PhotosFragmentDirections
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var toolbar: MaterialToolbar
     private lateinit var navController: NavController
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        toolbar = findViewById(R.id.toolbar)
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view)
-
-        toolbar.setTitleTextColor(Color.WHITE)
+        binding.toolbar.setTitleTextColor(Color.WHITE)
 
         val navHostFrag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFrag.navController
@@ -36,7 +40,16 @@ class MainActivity : AppCompatActivity() {
         val navFragments = setOf(R.id.scenesFragment, R.id.favoritesFragment)
 
         val appBarConfiguration = AppBarConfiguration(navFragments)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
-        bottomNavigationView.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 }

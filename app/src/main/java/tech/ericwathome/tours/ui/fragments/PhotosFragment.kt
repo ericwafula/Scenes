@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.ui
+package tech.ericwathome.tours.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
