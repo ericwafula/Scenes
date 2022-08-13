@@ -2,6 +2,7 @@ package tech.ericwathome.tours.ui.fragments
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
@@ -20,6 +21,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun switchToNightMode(newValue: Boolean?) {
-        Toast.makeText(requireContext(), "$newValue", Toast.LENGTH_LONG).show()
+        when (newValue) {
+            true -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            else -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 }
