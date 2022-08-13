@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_sun_24"
-        android:key="key_night_mode"
-        android:summary="Activate night mode"
-        android:title="Night Mode" />
+    <PreferenceCategory android:title="@string/title_display" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_sun_24"
+            android:key="key_night_mode"
+            android:summary="@string/summary_night_mode"
+            android:title="@string/title_night_mode" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

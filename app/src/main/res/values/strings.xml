@@ -6,4 +6,7 @@
     <string name="scene_info">Scene Info</string>
     <string name="retry">Retry</string>
     <string name="textview">TextView</string>
+    <string name="title_display">Display</string>
+    <string name="title_night_mode">Night Mode</string>
+    <string name="summary_night_mode">Activate night mode</string>
 </resources>
