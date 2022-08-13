@@ -9,4 +9,6 @@
     <string name="title_display">Display</string>
     <string name="title_night_mode">Night Mode</string>
     <string name="summary_night_mode">Activate night mode</string>
+    <string name="key_night_mode">key_night_mode</string>
+    <string name="settings">Settings</string>
 </resources>

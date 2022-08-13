@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/scenesFragment"
-            android:icon="@drawable/home_outlined"
-            android:title="@string/scenes" />
-        <item
-            android:id="@+id/favoritesFragment"
-            android:icon="@drawable/heart_outlined"
-            android:title="@string/favorites" />
-    </group>
+    <item
+        android:id="@+id/nav_settings"
+        android:title="@string/settings" />
 </menu>
