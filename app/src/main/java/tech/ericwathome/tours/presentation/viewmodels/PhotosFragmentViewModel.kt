@@ -4,22 +4,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import tech.ericwathome.tours.domain.repository.Repository
 import tech.ericwathome.tours.domain.model.Photo
+import tech.ericwathome.tours.domain.use_case.AddBookmarksUseCase
+import tech.ericwathome.tours.domain.use_case.AllPhotosUseCase
+import tech.ericwathome.tours.util.LoadState
+import tech.ericwathome.tours.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotosFragmentViewModel @Inject constructor(private val repository: Repository) :
+class PhotosFragmentViewModel @Inject constructor(
+    private val allPhotosUseCase: AllPhotosUseCase,
+    private val addBookmarksUseCase: AddBookmarksUseCase
+) :
     ViewModel() {
-    private var _photos : MutableStateFlow<PagingData<Photo>?> = MutableStateFlow(null)
+    private var _photos: MutableStateFlow<PagingData<Photo>?> = MutableStateFlow(null)
     val photos = _photos.asStateFlow()
+    val bookmarksState = MutableStateFlow(LoadState<Any>())
 
     init {
         allPhotos()
@@ -27,7 +31,7 @@ class PhotosFragmentViewModel @Inject constructor(private val repository: Reposi
 
     private fun allPhotos() {
         viewModelScope.launch {
-            repository.allPhotos()
+            allPhotosUseCase()
                 .flowOn(Dispatchers.IO)
                 .cachedIn(viewModelScope)
                 .collect {
@@ -37,6 +41,18 @@ class PhotosFragmentViewModel @Inject constructor(private val repository: Reposi
     }
 
     fun addToBookmarks(photo: Photo) {
-        repository.addToBookmarks(photo)
+        addBookmarksUseCase(photo).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    bookmarksState.value = LoadState(data = result.data)
+                }
+                is Resource.Loading -> {
+                    bookmarksState.value = LoadState(loading = true)
+                }
+                is Resource.Error -> {
+                    bookmarksState.value = LoadState(errorMessage = "An unknown error occurred")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

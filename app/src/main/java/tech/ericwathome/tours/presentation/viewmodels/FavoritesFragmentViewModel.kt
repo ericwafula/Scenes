@@ -5,19 +5,24 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import tech.ericwathome.tours.domain.model.Photo
-import tech.ericwathome.tours.domain.repository.Repository
+import tech.ericwathome.tours.domain.use_case.BookmarkedPhotosUseCase
+import tech.ericwathome.tours.domain.use_case.DeletePhotoUseCase
+import tech.ericwathome.tours.util.LoadState
+import tech.ericwathome.tours.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesFragmentViewModel @Inject constructor(
-    private val repository: Repository
+    private val bookmarkedPhotosUseCase: BookmarkedPhotosUseCase,
+    private val deletePhotoUseCase: DeletePhotoUseCase
 ) : ViewModel() {
-    private var _bookmarkedPhotos: MutableStateFlow<MutableList<Photo>> = MutableStateFlow(
-        mutableListOf())
+    private var _bookmarkedPhotos= MutableStateFlow(listOf<Photo>())
     val bookmarkedPhotos = _bookmarkedPhotos.asStateFlow()
+    val deletePhotosState = MutableStateFlow(LoadState<Any>())
 
     init {
         getBookmarkedPhotos()
@@ -25,14 +30,26 @@ class FavoritesFragmentViewModel @Inject constructor(
 
     private fun getBookmarkedPhotos() {
         viewModelScope.launch {
-            repository.bookmarkedPhotos()
+            bookmarkedPhotosUseCase()
                 .collect {
-                    _bookmarkedPhotos.value.add(it)
+                    _bookmarkedPhotos.value = it
                 }
         }
     }
 
     fun deletePhoto(photo: Photo) {
-        repository.deletePhoto(photo)
+        deletePhotoUseCase(photo).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    deletePhotosState.value = LoadState(data = result.data)
+                }
+                is Resource.Loading -> {
+                    deletePhotosState.value = LoadState(loading = true)
+                }
+                is Resource.Error -> {
+                    deletePhotosState.value = LoadState(errorMessage = "An unknown error occurred")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

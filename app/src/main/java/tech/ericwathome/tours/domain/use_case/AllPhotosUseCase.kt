@@ -9,8 +9,11 @@ import tech.ericwathome.tours.data.remote.UnsplashPagingSource
 import tech.ericwathome.tours.domain.model.Photo
 import tech.ericwathome.tours.domain.repository.Repository
 import tech.ericwathome.tours.util.NETWORK_PAGE_SIZE
+import javax.inject.Inject
 
-class AllPhotosUseCase(private val repository: Repository) {
+class AllPhotosUseCase @Inject constructor(
+    private val repository: Repository
+) {
     operator fun invoke(): Flow<PagingData<Photo>> {
         val pagingConfig = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false)
         return Pager(
