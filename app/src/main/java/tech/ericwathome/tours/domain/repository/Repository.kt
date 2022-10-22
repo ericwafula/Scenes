@@ -7,11 +7,11 @@ import tech.ericwathome.tours.domain.model.Photo
 import tech.ericwathome.tours.util.Resource
 
 interface Repository {
-    fun allPhotos(): Flow<PagingData<Photo>>
+    suspend fun allPhotos(page: Int): List<Photo>
 
-    fun bookmarkedPhotos(): Flow<Photo>
+    suspend fun bookmarkedPhotos(): List<Photo>
 
-    fun addToBookmarks(photo: Photo)
+    suspend fun addToBookmarks(photo: Photo)
 
-    fun deletePhoto(photo: Photo)
+    suspend fun deletePhoto(photo: Photo)
 }

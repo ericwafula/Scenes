@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import tech.ericwathome.tours.data.remote.UnsplashPagingSource
 import tech.ericwathome.tours.data.remote.UnsplashApiService
 import tech.ericwathome.tours.data.local.PhotoDao
@@ -22,33 +23,20 @@ class RepositoryImpl @Inject constructor(
     private val photoDao: PhotoDao
 ) :
     Repository {
-    override fun allPhotos(): Flow<PagingData<Photo>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { UnsplashPagingSource(apiService) }
-        ).flow
+    override suspend fun allPhotos(page: Int): List<Photo> {
+        return apiService.getPhotos(page)
     }
 
-    override fun bookmarkedPhotos(): Flow<Photo> {
-        return flow {
-            val photos = photoDao.savedPhotos()
-            photos.forEach { photo -> emit(photo) }
-        }.flowOn(Dispatchers.IO)
+    override suspend fun bookmarkedPhotos(): List<Photo> {
+        return photoDao.savedPhotos()
     }
 
-    override fun addToBookmarks(photo: Photo) {
-        CoroutineScope(Dispatchers.IO).launch {
-            photoDao.insert(photo)
-        }
+    override suspend fun addToBookmarks(photo: Photo) {
+        photoDao.insert(photo)
     }
 
-    override fun deletePhoto(photo: Photo) {
-        CoroutineScope(Dispatchers.IO).launch {
-            photoDao.delete(photo)
-        }
+    override suspend fun deletePhoto(photo: Photo) {
+        photoDao.delete(photo)
     }
 
 }
