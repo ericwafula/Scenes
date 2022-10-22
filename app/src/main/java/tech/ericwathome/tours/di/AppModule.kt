@@ -12,9 +12,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tech.ericwathome.tours.data.network.UnsplashApiService
-import tech.ericwathome.tours.data.room.PhotoDao
-import tech.ericwathome.tours.data.room.PhotoDatabase
+import tech.ericwathome.tours.data.remote.UnsplashApiService
+import tech.ericwathome.tours.data.local.PhotoDao
+import tech.ericwathome.tours.data.local.PhotoDatabase
 import tech.ericwathome.tours.util.API_KEY
 import tech.ericwathome.tours.util.BASE_URL
 import javax.inject.Singleton

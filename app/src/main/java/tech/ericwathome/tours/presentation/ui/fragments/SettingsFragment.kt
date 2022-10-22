@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.ui.fragments
+package tech.ericwathome.tours.presentation.ui.fragments
 
 import android.os.Bundle
 import android.widget.Toast

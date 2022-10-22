@@ -1,9 +1,9 @@
 package tech.ericwathome.tours.util
 
 import androidx.room.TypeConverter
-import tech.ericwathome.tours.model.Size
-import tech.ericwathome.tours.model.Sponsor
-import tech.ericwathome.tours.model.Sponsorship
+import tech.ericwathome.tours.domain.model.Size
+import tech.ericwathome.tours.domain.model.Sponsor
+import tech.ericwathome.tours.domain.model.Sponsorship
 
 class SizeConverter {
     @TypeConverter

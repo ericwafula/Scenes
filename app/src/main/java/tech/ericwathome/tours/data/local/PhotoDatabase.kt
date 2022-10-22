@@ -1,9 +1,9 @@
-package tech.ericwathome.tours.data.room
+package tech.ericwathome.tours.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.domain.model.Photo
 import tech.ericwathome.tours.util.SizeConverter
 import tech.ericwathome.tours.util.SponsorshipConverter
 

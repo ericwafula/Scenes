@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.adapter
+package tech.ericwathome.tours.presentation.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

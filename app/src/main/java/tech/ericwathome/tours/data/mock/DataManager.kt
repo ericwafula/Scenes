@@ -1,7 +1,7 @@
-package tech.ericwathome.tours.data
+package tech.ericwathome.tours.data.mock
 
 import tech.ericwathome.tours.R
-import tech.ericwathome.tours.model.SceneInfo
+import tech.ericwathome.tours.domain.model.SceneInfo
 
 object DataManager {
     val scenes = ArrayList<SceneInfo>()

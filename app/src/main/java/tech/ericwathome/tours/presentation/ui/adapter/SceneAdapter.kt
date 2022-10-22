@@ -1,17 +1,15 @@
-package tech.ericwathome.tours.adapter
+package tech.ericwathome.tours.presentation.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import tech.ericwathome.tours.R
-import tech.ericwathome.tours.data.DataManager
+import tech.ericwathome.tours.data.mock.DataManager
 import tech.ericwathome.tours.databinding.SceneListItemBinding
-import tech.ericwathome.tours.model.SceneInfo
+import tech.ericwathome.tours.domain.model.SceneInfo
 
 class SceneAdapter(private val context: Context, private val scenes: ArrayList<SceneInfo>) :
     RecyclerView.Adapter<SceneAdapter.SceneViewHolder>() {

@@ -1,9 +1,8 @@
-package tech.ericwathome.tours.data.network
+package tech.ericwathome.tours.data.remote
 
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.domain.model.Photo
 
 interface UnsplashApiService {
     @GET("photos")

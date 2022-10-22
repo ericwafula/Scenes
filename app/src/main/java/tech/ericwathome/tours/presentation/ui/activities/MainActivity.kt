@@ -1,26 +1,19 @@
-package tech.ericwathome.tours.ui.activities
+package tech.ericwathome.tours.presentation.ui.activities
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.ericwathome.tours.R
 import tech.ericwathome.tours.databinding.ActivityMainBinding
-import tech.ericwathome.tours.ui.fragments.FavoritesFragmentDirections
-import tech.ericwathome.tours.ui.fragments.PhotosFragmentDirections
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

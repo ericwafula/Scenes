@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.ui.fragments
+package tech.ericwathome.tours.presentation.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import tech.ericwathome.tours.adapter.PhotosLoadStateAdapter
-import tech.ericwathome.tours.adapter.PhotosPagingAdapter
+import tech.ericwathome.tours.presentation.ui.adapter.PhotosLoadStateAdapter
+import tech.ericwathome.tours.presentation.ui.adapter.PhotosPagingAdapter
 import tech.ericwathome.tours.databinding.FragmentPhotosBinding
-import tech.ericwathome.tours.model.Photo
-import tech.ericwathome.tours.model.viewmodels.PhotosFragmentViewModel
+import tech.ericwathome.tours.domain.model.Photo
+import tech.ericwathome.tours.presentation.viewmodels.PhotosFragmentViewModel
 import tech.ericwathome.tours.util.toast
 
 @AndroidEntryPoint

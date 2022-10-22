@@ -1,8 +1,7 @@
-package tech.ericwathome.tours.data.room
+package tech.ericwathome.tours.data.local
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.domain.model.Photo
 
 @Dao
 interface PhotoDao {

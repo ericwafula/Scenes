@@ -1,10 +1,10 @@
-package tech.ericwathome.tours.data
+package tech.ericwathome.tours.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import retrofit2.HttpException
-import tech.ericwathome.tours.data.network.UnsplashApiService
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.data.remote.UnsplashApiService
+import tech.ericwathome.tours.domain.model.Photo
 import tech.ericwathome.tours.util.STARTING_PAGE
 import java.io.IOException
 

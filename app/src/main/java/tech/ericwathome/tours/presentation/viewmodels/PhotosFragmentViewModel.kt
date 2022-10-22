@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.model.viewmodels
+package tech.ericwathome.tours.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import tech.ericwathome.tours.repository.Repository
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.domain.repository.Repository
+import tech.ericwathome.tours.domain.model.Photo
 import javax.inject.Inject
 
 @HiltViewModel

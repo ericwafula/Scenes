@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.repository
+package tech.ericwathome.tours.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import tech.ericwathome.tours.data.UnsplashPagingSource
-import tech.ericwathome.tours.data.network.UnsplashApiService
-import tech.ericwathome.tours.data.room.PhotoDao
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.data.remote.UnsplashPagingSource
+import tech.ericwathome.tours.data.remote.UnsplashApiService
+import tech.ericwathome.tours.data.local.PhotoDao
+import tech.ericwathome.tours.domain.model.Photo
+import tech.ericwathome.tours.domain.repository.Repository
 import tech.ericwathome.tours.util.NETWORK_PAGE_SIZE
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class RepositoryImpl @Inject constructor(
     private val apiService: UnsplashApiService,

@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.adapter
+package tech.ericwathome.tours.presentation.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tech.ericwathome.tours.databinding.SceneListItemBinding
-import tech.ericwathome.tours.model.Photo
+import tech.ericwathome.tours.domain.model.Photo
 import tech.ericwathome.tours.util.DiffCallback
 
 class PhotosPagingAdapter(

@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.model
+package tech.ericwathome.tours.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

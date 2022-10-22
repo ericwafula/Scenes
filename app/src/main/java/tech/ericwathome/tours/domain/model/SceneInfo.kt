@@ -1,4 +1,4 @@
-package tech.ericwathome.tours.model
+package tech.ericwathome.tours.domain.model
 
 data class SceneInfo(var imageId: Int, var title: String, var info: String, var category: String, var isFavorite: Boolean = false) {
     override fun toString(): String {
