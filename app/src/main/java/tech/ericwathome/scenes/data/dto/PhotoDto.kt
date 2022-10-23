@@ -1,22 +1,47 @@
 package tech.ericwathome.scenes.data.dto
 
+import com.google.gson.annotations.SerializedName
+import tech.ericwathome.scenes.domain.model.Photo
+
 data class PhotoDto(
-    val alt_description: Any,
-    val blur_hash: String,
+    @SerializedName("alt_description")
+    val altDescription: String?,
+    @SerializedName("blur_hash")
+    val blurHash: String,
     val color: String,
-    val created_at: String,
-    val current_user_collections: List<Any>,
-    val description: Any,
+    @SerializedName("created_at")
+    val createdAt: String,
+    @SerializedName("current_user_collections")
+    val currentUserCollections: List<Any>,
+    val description: String?,
     val height: Int,
     val id: String,
-    val liked_by_user: Boolean,
+    @SerializedName("liked_by_user")
+    val likedByUser: Boolean,
     val likes: Int,
+    @SerializedName("links")
     val linksDto: LinksDto,
-    val promoted_at: Any,
+    @SerializedName("promoted_at")
+    val promotedAt: String,
+    @SerializedName("sponsorship")
     val sponsorshipDto: SponsorshipDto,
-    val topic_submissions: TopicSubmissionsDto,
-    val updated_at: String,
-    val urlsDto: UrlsDto,
+    @SerializedName("topic_submissions")
+    val topicSubmissions: TopicSubmissionsDto,
+    @SerializedName("updated_at")
+    val updatedAt: String,
+    @SerializedName("urls")
+    val sizeDto: SizeDto,
     val user: User,
     val width: Int
 )
+
+fun PhotoDto.toPhoto(): Photo {
+    return Photo(
+        id = id,
+        description = description,
+        altDescription = altDescription,
+        size = sizeDto.toSize(),
+        likes = likes,
+        sponsorship = sponsorshipDto.toSponsorship()
+    )
+}
