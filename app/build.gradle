@@ -14,7 +14,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "tech.ericwathome.tours"
+        applicationId "tech.ericwathome.scenes"
         minSdk 21
         targetSdk 33
         versionCode 1
