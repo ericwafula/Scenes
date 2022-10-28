@@ -23,10 +23,14 @@ android {
         buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildFeatures {
         viewBinding true
+        compose true
     }
 
     buildTypes {
@@ -43,9 +47,24 @@ android {
         jvmTarget = '1.8'
     }
     namespace 'tech.ericwathome.tours'
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.1.1'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 }
 
 dependencies {
+    implementation 'androidx.activity:activity-compose:1.3.1'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.compose.material3:material3:1.0.0-alpha02'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     def nav_version = "2.5.2"
 
     implementation 'androidx.core:core-ktx:1.9.0'
