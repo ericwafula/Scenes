@@ -10,7 +10,7 @@ import tech.ericwathome.scenes.feature_scenes.domain.repository.Repository
 import tech.ericwathome.scenes.util.NETWORK_PAGE_SIZE
 import javax.inject.Inject
 
-class AllPhotosUseCase @Inject constructor(
+class AllPhotos @Inject constructor(
     private val repository: Repository
 ) {
     operator fun invoke(): Flow<PagingData<Photo>> {

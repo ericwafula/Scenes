@@ -1,5 +1,6 @@
 package tech.ericwathome.scenes.feature_scenes.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import tech.ericwathome.scenes.feature_scenes.data.data_source.local.PhotoDao
 import tech.ericwathome.scenes.feature_scenes.data.data_source.remote.UnsplashApiService
 import tech.ericwathome.scenes.feature_scenes.domain.model.Photo
@@ -15,7 +16,7 @@ class RepositoryImpl @Inject constructor(
         return apiService.getPhotos(page)
     }
 
-    override suspend fun bookmarkedPhotos(): List<Photo> {
+    override fun bookmarkedPhotos(): Flow<List<Photo>> {
         return photoDao.savedPhotos()
     }
 

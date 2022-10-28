@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import tech.ericwathome.scenes.feature_scenes.domain.model.Photo
-import tech.ericwathome.scenes.feature_scenes.domain.use_case.BookmarkedPhotosUseCase
-import tech.ericwathome.scenes.feature_scenes.domain.use_case.DeletePhotoUseCase
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.BookmarkedPhotos
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.DeletePhoto
 import tech.ericwathome.scenes.util.LoadState
 import tech.ericwathome.scenes.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesFragmentViewModel @Inject constructor(
-    private val bookmarkedPhotosUseCase: BookmarkedPhotosUseCase,
-    private val deletePhotoUseCase: DeletePhotoUseCase
+    private val bookmarkedPhotosUseCase: BookmarkedPhotos,
+    private val deletePhoto: DeletePhoto
 ) : ViewModel() {
     private var _bookmarkedPhotos = MutableStateFlow(listOf<Photo>())
     val bookmarkedPhotos = _bookmarkedPhotos.asStateFlow()
@@ -38,18 +38,6 @@ class FavoritesFragmentViewModel @Inject constructor(
     }
 
     fun deletePhoto(photo: Photo) {
-        deletePhotoUseCase(photo).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    deletePhotosState.value = LoadState(data = result.data)
-                }
-                is Resource.Loading -> {
-                    deletePhotosState.value = LoadState(loading = true)
-                }
-                is Resource.Error -> {
-                    deletePhotosState.value = LoadState(errorMessage = "An unknown error occurred")
-                }
-            }
-        }.launchIn(viewModelScope)
+        
     }
 }

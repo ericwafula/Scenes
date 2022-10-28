@@ -1,5 +1,6 @@
 package tech.ericwathome.scenes.feature_scenes.domain.use_case
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import tech.ericwathome.scenes.feature_scenes.domain.model.Photo
 import tech.ericwathome.scenes.feature_scenes.domain.repository.Repository
@@ -7,16 +8,10 @@ import tech.ericwathome.scenes.util.Resource
 import java.io.IOException
 import javax.inject.Inject
 
-class DeletePhotoUseCase @Inject constructor(
+class AddBookmarks @Inject constructor(
     private val repository: Repository
 ) {
-    operator fun invoke(photo: Photo) = flow {
-        try {
-            emit(Resource.Loading())
-            repository.deletePhoto(photo)
-            emit(Resource.Success("Photo deleted successfully"))
-        } catch (e: IOException) {
-            emit(Resource.Error(e.localizedMessage ?: "unable to delete photo"))
-        }
+    suspend operator fun invoke(photo: Photo) {
+        repository.addToBookmarks(photo)
     }
 }

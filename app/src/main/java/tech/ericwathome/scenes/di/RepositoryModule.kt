@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import tech.ericwathome.scenes.domain.repository.Repository
-import tech.ericwathome.scenes.data.repository.RepositoryImpl
+import tech.ericwathome.scenes.feature_scenes.data.repository.RepositoryImpl
+import tech.ericwathome.scenes.feature_scenes.domain.repository.Repository
 import javax.inject.Singleton
 
 @Module

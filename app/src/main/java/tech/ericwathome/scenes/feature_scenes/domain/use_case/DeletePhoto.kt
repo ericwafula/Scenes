@@ -7,16 +7,10 @@ import tech.ericwathome.scenes.util.Resource
 import java.io.IOException
 import javax.inject.Inject
 
-class AddBookmarksUseCase @Inject constructor(
+class DeletePhoto @Inject constructor(
     private val repository: Repository
 ) {
-    operator fun invoke(photo: Photo)  = flow {
-        try {
-            emit(Resource.Loading())
-            repository.addToBookmarks(photo)
-            emit(Resource.Success("Photo added successfully"))
-        } catch (e: IOException) {
-            emit(Resource.Error(e.localizedMessage ?: "unable to bookmark photo"))
-        }
+    suspend operator fun invoke(photo: Photo) {
+        repository.deletePhoto(photo)
     }
 }

@@ -12,9 +12,15 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tech.ericwathome.scenes.data.remote.UnsplashApiService
-import tech.ericwathome.scenes.data.local.PhotoDao
-import tech.ericwathome.scenes.data.local.PhotoDatabase
+import tech.ericwathome.scenes.feature_scenes.data.data_source.local.PhotoDao
+import tech.ericwathome.scenes.feature_scenes.data.data_source.local.PhotoDatabase
+import tech.ericwathome.scenes.feature_scenes.data.data_source.remote.UnsplashApiService
+import tech.ericwathome.scenes.feature_scenes.domain.repository.Repository
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.AddBookmarks
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.AllPhotos
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.BookmarkedPhotos
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.DeletePhoto
+import tech.ericwathome.scenes.feature_scenes.domain.util.ScenesUseCases
 import tech.ericwathome.scenes.util.API_KEY
 import tech.ericwathome.scenes.util.BASE_URL
 import javax.inject.Singleton
@@ -71,6 +77,17 @@ object AppModule {
     @Singleton
     fun providePhotoDao(photoDatabase: PhotoDatabase): PhotoDao {
         return photoDatabase.photoDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideScenesUseCases(repository: Repository): ScenesUseCases {
+        return ScenesUseCases(
+            addBookmarks = AddBookmarks(repository),
+            allPhotos = AllPhotos(repository),
+            bookmarkedPhotos = BookmarkedPhotos(repository),
+            deletePhoto = DeletePhoto(repository)
+        )
     }
 
 }

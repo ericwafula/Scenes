@@ -9,16 +9,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tech.ericwathome.scenes.feature_scenes.domain.model.Photo
-import tech.ericwathome.scenes.feature_scenes.domain.use_case.AddBookmarksUseCase
-import tech.ericwathome.scenes.feature_scenes.domain.use_case.AllPhotosUseCase
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.AddBookmarks
+import tech.ericwathome.scenes.feature_scenes.domain.use_case.AllPhotos
 import tech.ericwathome.scenes.util.LoadState
 import tech.ericwathome.scenes.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class PhotosFragmentViewModel @Inject constructor(
-    private val allPhotosUseCase: AllPhotosUseCase,
-    private val addBookmarksUseCase: AddBookmarksUseCase
+    private val allPhotos: AllPhotos,
+    private val addBookmarks: AddBookmarks
 ) :
     ViewModel() {
     private var _photos: MutableStateFlow<PagingData<Photo>?> = MutableStateFlow(null)
@@ -31,28 +31,11 @@ class PhotosFragmentViewModel @Inject constructor(
 
     private fun allPhotos() {
         viewModelScope.launch {
-            allPhotosUseCase()
-                .flowOn(Dispatchers.IO)
-                .cachedIn(viewModelScope)
-                .collect {
-                    _photos.value = it
-                }
+
         }
     }
 
     fun addToBookmarks(photo: Photo) {
-        addBookmarksUseCase(photo).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    bookmarksState.value = LoadState(data = result.data)
-                }
-                is Resource.Loading -> {
-                    bookmarksState.value = LoadState(loading = true)
-                }
-                is Resource.Error -> {
-                    bookmarksState.value = LoadState(errorMessage = "An unknown error occurred")
-                }
-            }
-        }.launchIn(viewModelScope)
+
     }
 }
