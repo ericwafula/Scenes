@@ -1,4 +1,4 @@
-package tech.ericwathome.scenes.feature_scenes.presentation.ui.fragments
+package tech.ericwathome.scenes.feature_scenes.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate

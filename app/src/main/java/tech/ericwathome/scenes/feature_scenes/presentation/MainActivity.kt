@@ -1,4 +1,4 @@
-package tech.ericwathome.scenes.feature_scenes.presentation.ui.activities
+package tech.ericwathome.scenes.feature_scenes.presentation
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity

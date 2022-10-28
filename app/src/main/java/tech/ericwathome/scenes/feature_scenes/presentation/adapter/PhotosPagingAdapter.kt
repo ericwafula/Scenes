@@ -1,4 +1,4 @@
-package tech.ericwathome.scenes.feature_scenes.presentation.ui.adapter
+package tech.ericwathome.scenes.feature_scenes.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
