@@ -1,9 +1,9 @@
 package tech.ericwathome.scenes.util
 
 import androidx.room.TypeConverter
-import tech.ericwathome.scenes.domain.model.Size
-import tech.ericwathome.scenes.domain.model.Sponsor
-import tech.ericwathome.scenes.domain.model.Sponsorship
+import tech.ericwathome.scenes.feature_scenes.domain.model.Size
+import tech.ericwathome.scenes.feature_scenes.domain.model.Sponsor
+import tech.ericwathome.scenes.feature_scenes.domain.model.Sponsorship
 
 class SizeConverter {
     @TypeConverter

@@ -1,4 +1,4 @@
-package tech.ericwathome.scenes.util.adapter
+package tech.ericwathome.scenes.feature_scenes.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
