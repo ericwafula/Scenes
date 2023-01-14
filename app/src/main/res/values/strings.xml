@@ -11,4 +11,8 @@
     <string name="summary_night_mode">Activate night mode</string>
     <string name="key_night_mode">key_night_mode</string>
     <string name="settings">Settings</string>
+    <string name="logo">Logo</string>
+    <string name="onboard_screen_background_img">Onboard screen background image</string>
+    <string name="onboard_screen_title">Explore breathtaking moments</string>
+    <string name="onboard_screen_sub_title">Immerse yourself today</string>
 </resources>
